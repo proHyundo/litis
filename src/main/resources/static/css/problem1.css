@@ -1,0 +1,12 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100dvh;
+}
+
+#box {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
