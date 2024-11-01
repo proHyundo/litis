@@ -1,4 +1,4 @@
-INSERT INTO dept (dept_name, parent_dept_id, level, order_num) VALUES
+INSERT INTO t_dept (dept_name, parent_dept_id, dept_level, dept_order_num) VALUES
     ('대표이사', NULL, 1, 1),
     ('경영관리', 1, 2, 1),
     ('영업본부', 1, 2, 2),
