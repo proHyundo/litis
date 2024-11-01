@@ -41,3 +41,43 @@ CREATE TABLE t_dept (
     FOREIGN KEY (parent_dept_id) REFERENCES t_dept(dept_id) ON DELETE CASCADE
 );
 ```
+
+### 3번 문항
+
+> 계층 쿼리
+
+```sql
+WITH RECURSIVE dept_hierarchy AS (
+    SELECT
+        dept_id,
+        dept_name,
+        parent_dept_id,
+        dept_level,
+        dept_order_num,
+        CAST(dept_order_num AS CHAR(100)) as order_path
+    FROM t_dept
+    WHERE parent_dept_id IS NULL
+
+    UNION ALL
+
+    SELECT
+        d.dept_id,
+        CONCAT('└ ', d.dept_name) as dept_name,
+        d.parent_dept_id,
+        d.dept_level,
+        d.dept_order_num,
+        CONCAT(h.order_path, '-', d.dept_order_num) as order_path
+    FROM t_dept d
+             INNER JOIN dept_hierarchy h ON d.parent_dept_id = h.dept_id
+)
+SELECT
+    CONCAT(REPEAT('    ', dept_level), dept_name) as hierarchy_view
+FROM dept_hierarchy
+ORDER BY order_path;
+
+```
+
+> 결과
+
+![image](https://github.com/user-attachments/assets/9c8aa0e9-16ae-4699-9f5d-64774329431c)
+
